@@ -25,7 +25,7 @@
    <div class="col-auto">
      <label for="motsCles" class="visually-hidden">Mots Clés</label>
      <i class="fa fa-search"></i>
-     <input type="text"  class="form-control mb-2 mr-sm-2" id="motsCles" placeholder="">
+     <input type="text" style="width: 290px;" class="form-control mb-2 mr-sm-2" id="motsCles" placeholder="">
    </div>
    <div class="col-auto"><br>
 
