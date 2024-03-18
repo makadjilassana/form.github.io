@@ -13,7 +13,6 @@ function extrairePhrasesDUnTexte($texte)
 {
 
 }
-a
 function extraireMotsDUnePhrase($phrase)
 {
      $aremplacer = array(",",";",":","!","?","(",")","[","]","{","}","\"","'"
