@@ -33,6 +33,5 @@ catch (Exception $e){
 	die('Erreur : ' . $e->getMessage());
      }
 }
-    insertion('2024-03-14','MAKADJI', 'Lassana', '1997-05-16', 'Bamako', '2023X 207933', '035');
 
 	?>
