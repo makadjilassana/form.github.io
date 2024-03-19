@@ -27,7 +27,7 @@ try{
 		    'serie' => $serie,
 		    'departement' => $departement
 	));
-	echo 'Insertion decret !';
+
 }
 catch (Exception $e){
 	die('Erreur : ' . $e->getMessage());
