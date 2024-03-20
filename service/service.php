@@ -2,11 +2,11 @@
 <?php include ('../controller/controller.php') ?>
 <?php
 
-$texte = "BAQERI (Fatemeh), née le 23/02/1992 à Teheran (Iran), NAT, 2023X 020629, dép. 077, Dt. 008/136.
-BARADJI (Djime), né le 01/03/1998 à Bamako (Mali), NAT, 2023X 020884, dép. 075, Dt. 008/138.";
+$texte =  collectData("decret00814032024.txt");
 
-function collectData($texte){
-          return $texte;
+function collectData($filename){
+     $fileContent = file_get_contents('../files/'.$filename);
+     return $fileContent;
      }
 
 function extrairePhrasesDUnTexte($texte)
@@ -18,19 +18,17 @@ function extrairePhrasesDUnTexte($texte)
 function transformerPhrase($phrase)
 {
      if(!preg_match('/^[A-Z]$/', $phrase[0])){
-     $cmp = intval($phrase[0]);
-     if(!preg_match('/^[A-Z]$/', $cmp)){
-          return substr($phrase,10);
+     $tmp = intval($phrase[0]);
+     if(!preg_match('/^[A-Z]$/', $tmp)){
+          return substr($phrase,8);
             }
      }
-     else{
           return $phrase;
-     }
 }
 
 function extraireMotsDUnePhrase($phrase)
 {
-     $aremplacer = array("née", "né", "le", "à","'"," ",",",";",".",":","!","?","(",")","[","]","{","}");
+     $aremplacer = array("née", "né", "le", "à","autorisée", "autorisé","s’appeler légalement","'"," ",",",";",".",":","!","?","(",")","[","]","{","}");
      $enremplacement = " ";
      $sansponctuation = trim(str_replace($aremplacer, $enremplacement, $phrase));
      $separateur = "#[ ]+#";
@@ -49,6 +47,13 @@ function listeNaturalisesParDecret($texte){
      return $phrases;
 }
 
+function extractionPaysNaissance($mot){
+     if(!preg_match('/^[1-9]$/',$mot[0])){
+          return $mot;
+     }
+         return "France";
+}
+
 function insertionPersonneDansDecret($texte, $dateDecret){
      $phrases = listeNaturalisesParDecret($texte);
      /** chaque phrase detient les infos d'une pesonne naturalisée **/
@@ -56,10 +61,11 @@ function insertionPersonneDansDecret($texte, $dateDecret){
      for($i = 0; $i<=count($phrases); $i++){
           $mots = extraireMotsDUnePhrase($phrases[$i]);
           $dateNaissance = explode("/",  $mots[2]);
-          $dateNaissance = $dateNaissance[2].$dateNaissance[1].$dateNaissance[0];
-          $personne = new Decret($dateDecret, $mots[0], $mots[1], $dateNaissance, $mots[3], $mots[6].$mots[7], $mots[9]);
+          $dateNaissance = $dateNaissance[2].$dateNaissance[1].$dateNaissance[0];[5];
+          $paysNaissance = extractionPaysNaissance($mots[4]);
+          $personne = new Decret($dateDecret, $mots[0], $mots[1], $dateNaissance, $mots[3], $paysNaissance,$mots[6].$mots[7], $mots[9]);
           try{
-               insertion($personne->getDateDecret(), $personne->getNom(), $personne->getPrenom(), $personne->getDateNaissance(), $personne->getVilleNaissance(), $personne->getSerie(), $personne->getDepartement());
+               insertion($personne->getDateDecret(), $personne->getNom(), $personne->getPrenom(), $personne->getDateNaissance(), $personne->getVilleNaissance(),  $personne->getPaysNaissance(), $personne->getSerie(), $personne->getDepartement());
           } catch (Exception $e){
                die('Erreur : ' . $e->getMessage());
           }
@@ -78,4 +84,5 @@ for ($i = 0; $i<=count($phrases); $i++){
 }
 
 insertionPersonneDansDecret($texte, "2023-03-14");
+
 ?>

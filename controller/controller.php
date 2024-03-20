@@ -14,16 +14,17 @@
 		}
 	}
 
-	function insertion($dateDecret, $nom, $prenom, $dateNaissance, $villeNaissance, $serie, $departement){
+	function insertion($dateDecret, $nom, $prenom, $dateNaissance, $villeNaissance, $paysNaissance, $serie, $departement){
 try{
 		$bdd = connexion();
-	    $req = $bdd->prepare('INSERT INTO decret(dateDecret,nom,prenom,dateNaissance,villeNaissance,serie,departement) VALUES(:dateDecret,:nom,:prenom,:dateNaissance,:villeNaissance,:serie,:departement)');
+	    $req = $bdd->prepare('INSERT INTO decret(dateDecret,nom,prenom,dateNaissance,villeNaissance,paysNaissance,serie,departement) VALUES(:dateDecret,:nom,:prenom,:dateNaissance,:villeNaissance,:paysNaissance,:serie,:departement)');
 	    $req->execute(array(
 	    	'dateDecret' => $dateDecret,
 		    'nom' => $nom,
 		    'prenom' => $prenom,
 		    'dateNaissance' => $dateNaissance,
 		    'villeNaissance' => $villeNaissance,
+			'paysNaissance' => $paysNaissance,
 		    'serie' => $serie,
 		    'departement' => $departement
 	));

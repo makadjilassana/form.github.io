@@ -5,17 +5,19 @@ class Decret {
     public $prenom;
     public $dateNaissance;
     public $villeNaissance;
+    public $paysNaissance;
     public $serie;
     public $departement;
 
 
-    public function __construct($dateDecret,$nom, $prenom, $dateNaissance, $villeNaissance, $serie, $departement)
+    public function __construct($dateDecret,$nom, $prenom, $dateNaissance, $villeNaissance, $paysNaissance, $serie, $departement)
     {
         $this->dateDecret = $dateDecret;
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->dateNaissance = $dateNaissance;
         $this->villeNaissance = $villeNaissance;
+        $this->paysNaissance = $paysNaissance;
         $this->serie = $serie;
         $this->departement = $departement;
     }
@@ -48,6 +50,11 @@ class Decret {
     public function getVilleNaissance()
     {
         return $this->villeNaissance;
+    }
+
+    public function getPaysNaissance()
+    {
+        return $this->paysNaissance;
     }
 
     public function getSerie()
